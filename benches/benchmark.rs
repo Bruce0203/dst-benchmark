@@ -1,7 +1,7 @@
 use std::{hint::black_box, mem::MaybeUninit};
 
 use criterion::{Criterion, Throughput};
-use fast_collections::{const_transmute_unchecked, GetUnchecked, Vec};
+use fast_collections::{GetUnchecked, Vec};
 use generic_array::typenum::U4;
 
 fn benchmark(c: &mut Criterion) {
@@ -22,28 +22,6 @@ fn benchmark(c: &mut Criterion) {
                 let value: &[MaybeUninit<u8>] = &[MaybeUninit::<u8>::uninit(); 4];
                 black_box(value);
                 let _: MaybeUninit<u8> = *black_box(unsafe { value.get_unchecked(2) });
-            }
-        })
-    });
-    return;
-
-    group.bench_function("bench boxed unsized slice", |b| {
-        b.iter(|| {
-            for _ in 0..1000 {
-                let value: Box<[MaybeUninit<u8>]> = Box::new([MaybeUninit::<u8>::uninit(); 4]);
-                black_box(unsafe { value.get_unchecked(2) });
-                black_box(value);
-            }
-        })
-    });
-
-    group.bench_function("bench alloc vec", |b| {
-        b.iter(|| {
-            for _ in 0..1000 {
-                let mut value = std::vec::Vec::<u8>::with_capacity(4);
-                unsafe { value.set_len(4) };
-                black_box(unsafe { value.get_unchecked(2) });
-                black_box(value);
             }
         })
     });
