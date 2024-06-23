@@ -1,23 +1,8 @@
-#![feature(core_intrinsics)]
-
 use std::{hint::black_box, mem::MaybeUninit};
 
 use criterion::{Criterion, Throughput};
 use fast_collections::{const_transmute_unchecked, GetUnchecked, Vec};
 use generic_array::typenum::U4;
-
-pub struct NewTypeOfU8(pub u8);
-
-impl Default for NewTypeOfU8 {
-    fn default() -> Self {
-        NewTypeOfU8(1)
-    }
-}
-
-const SIZED_SLICE: Vec<NewTypeOfU8, U4> =
-    Vec::from_array(unsafe { const_transmute_unchecked::<[u8; 4], [NewTypeOfU8; 4]>(*b"ABCD") });
-const UNSIZED_SLICE: &[NewTypeOfU8] =
-    unsafe { const_transmute_unchecked::<&[u8], &[NewTypeOfU8]>(b"ABCD") };
 
 fn benchmark(c: &mut Criterion) {
     let mut group = c.benchmark_group("benches");
