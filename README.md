@@ -14,7 +14,8 @@ benches/bench unsized slice
                           thrpt:  [2.7006 GiB/s 2.7044 GiB/s 2.7079 GiB/s]
   benches/bench unsized slice
                           time:   [2.0080 µs 2.0176 µs 2.0379 µs]
-                          thrpt:  [467.97 MiB/s 472.68 MiB/s 474.93 MiB/s]```
+                          thrpt:  [467.97 MiB/s 472.68 MiB/s 474.93 MiB/s]
+```
 
 ## MacBook Air M1
 ```benches/bench sized slice
